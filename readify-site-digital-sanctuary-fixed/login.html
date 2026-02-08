@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Readify • Login</title>
+
+  <link rel="icon" href="./assets/logo_cheems.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <div class="container navwrap">
+      <a class="brand" href="index.html">
+        <img src="./assets/logo_cheems.png" alt="Readify logo">
+        <span>Readify</span>
+      </a>
+
+      <nav class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="explorer.html">Book Explorer</a>
+        <a href="tracker.html">Progress Tracker</a>
+        <a href="recommender.html">Recommender</a>
+        <a href="flow.html">Reading Flow</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="login.html" id="loginLink">Login</a>
+        <a href="#" id="logoutLink" style="display:none;">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container page">
+    <section class="section">
+      <div class="card" style="padding:22px; max-width:520px; margin:0 auto;">
+        <div class="badge" style="margin-bottom:12px;">🔒 Quiet login zone</div>
+
+        <h1>Welcome back</h1>
+        <p class="small">
+          Log in to save your reading list and progress on this device.
+        </p>
+
+        <form id="loginForm">
+          <label>Email</label>
+          <input id="email" type="email" required>
+
+          <label>Password</label>
+          <input id="password" type="password" minlength="4" required>
+
+          <div style="display:flex; gap:10px; margin-top:14px;">
+            <button class="btn primary" type="submit">Login</button>
+            <button class="btn" type="button" id="demoBtn">Use Demo</button>
+          </div>
+
+          <p id="msg" class="small"></p>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container footerGrid">
+        <div>
+          <b>Readify</b>
+          <p class="small">A calm place to read and focus.</p>
+        </div>
+        <div>
+          <p class="small">© <span id="year"></span> Readify</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script>
+    document.body.classList.add("loaded");
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const loginLink = document.getElementById("loginLink");
+    const logoutLink = document.getElementById("logoutLink");
+
+    if (window.ReadifyAuth) {
+      if (window.ReadifyAuth.isLoggedIn()) {
+        loginLink.style.display = "none";
+        logoutLink.style.display = "inline-flex";
+      }
+
+      logoutLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.ReadifyAuth.clearUser();
+        window.location.href = "login.html";
+      });
+    }
+  </script>
+
+</body>
+</html>
